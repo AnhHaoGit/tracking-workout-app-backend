@@ -1,11 +1,7 @@
-import type { Request, Response } from "express";
 import { connectToDatabase } from "../../libs/connect-db.ts";
 import { ObjectId } from "mongodb";
 
-export async function deleteWorkoutSessionExercise(
-  req: Request,
-  res: Response,
-) {
+export async function deleteWorkoutSessionExercise(req, res) {
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });
@@ -45,7 +41,7 @@ export async function deleteWorkoutSessionExercise(
     }
 
     const updatedExercises = session.exercises.filter(
-      (_: any, idx: number) => idx !== exerciseIndex,
+      (_, idx) => idx !== exerciseIndex,
     );
 
     const result = await sessionsCollection.findOneAndUpdate(
@@ -70,7 +66,7 @@ export async function deleteWorkoutSessionExercise(
   }
 }
 
-export async function addWorkoutSessionExercises(req: Request, res: Response) {
+export async function addWorkoutSessionExercises(req, res) {
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });

@@ -1,26 +1,19 @@
-import type { Request, Response } from "express";
 import { connectToDatabase } from "../../libs/connect-db.ts";
 import formatDate from "../../libs/format-date.ts";
 
-export async function getRepsStatistics(req: Request, res: Response) {
+export async function getVolumeStatistics(req, res) {
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });
   }
 
-  const exerciseIdParam = Array.isArray(req.query.exerciseId)
-    ? req.query.exerciseId[0]
-    : req.query.exerciseId;
-
-  if (!exerciseIdParam) {
+  const name = Array.isArray(req.query.name)
+    ? req.query.name[0]
+    : req.query.name;
+  if (!name) {
     return res
       .status(400)
-      .json({ error: "Missing required query param: exerciseId" });
-  }
-
-  const exerciseId = Number(exerciseIdParam);
-  if (Number.isNaN(exerciseId)) {
-    return res.status(400).json({ error: "exerciseId must be a number" });
+      .json({ error: "Missing required query param: name" });
   }
 
   try {
@@ -29,26 +22,29 @@ export async function getRepsStatistics(req: Request, res: Response) {
 
     const result = await sessionsCollection
       .aggregate([
-        {
-          $match: {
-            userId,
-            status: "Completed",
-            "exercises.id": exerciseId,
-          },
-        },
+        { $match: { userId, status: "Completed", name } },
         { $unwind: "$exercises" },
-        { $match: { "exercises.id": exerciseId } },
         { $unwind: "$exercises.sets" },
         {
           $group: {
             _id: "$_id",
             date: { $first: "$date" },
             time: { $first: "$time" },
-            totalReps: {
+            volume: {
               $sum: {
                 $cond: [
-                  { $ne: ["$exercises.sets.reps", null] },
-                  "$exercises.sets.reps",
+                  {
+                    $and: [
+                      { $ne: ["$exercises.sets.weight", null] },
+                      { $ne: ["$exercises.sets.reps", null] },
+                    ],
+                  },
+                  {
+                    $multiply: [
+                      "$exercises.sets.weight",
+                      "$exercises.sets.reps",
+                    ],
+                  },
                   0,
                 ],
               },
@@ -61,12 +57,12 @@ export async function getRepsStatistics(req: Request, res: Response) {
 
     const data = result.map((session) => ({
       label: formatDate(session.date),
-      value: session.totalReps,
+      value: Math.round(session.volume * 100) / 100,
     }));
 
     return res.json(data);
   } catch (error) {
-    console.error("Error fetching reps statistics:", error);
-    return res.status(500).json({ error: "Cannot fetch reps statistics" });
+    console.error("Error fetching volume statistics:", error);
+    return res.status(500).json({ error: "Cannot fetch volume statistics" });
   }
 }

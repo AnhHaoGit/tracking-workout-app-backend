@@ -1,23 +1,9 @@
-import type { Request, Response, NextFunction } from "express";
 import * as jose from "jose";
 import { JWT_SECRET } from "../config/constants.ts";
-import type { AuthUser } from "../config/type.ts";
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: AuthUser;
-    }
-  }
-}
-
-export async function withAuth(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> {
+export async function withAuth(req, res, next) {
   try {
-    let token: string | null = null;
+    let token = null;
 
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith("Bearer ")) {
@@ -40,7 +26,7 @@ export async function withAuth(
       new TextEncoder().encode(jwtSecret),
     );
 
-    const payload = verified.payload as AuthUser & { type?: string };
+    const payload = verified.payload;
     if (payload.type !== "access") {
       res.status(401).json({ error: "Access token required" });
       return;

@@ -1,7 +1,6 @@
-import type { Request, Response } from "express";
 import { connectToDatabase } from "../../libs/connect-db.ts";
 
-export async function updateRoutine(req: Request, res: Response) {
+export async function updateRoutine(req, res) {
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });

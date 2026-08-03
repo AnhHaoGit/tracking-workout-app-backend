@@ -1,4 +1,3 @@
-import type { Request, Response } from "express";
 import {
   APP_SCHEME,
   BASE_URL,
@@ -6,7 +5,7 @@ import {
   GOOGLE_CLIENT_ID,
 } from "../../config/constants.ts";
 
-export function googleAuthRedirect(req: Request, res: Response) {
+export function googleAuthRedirect(req, res) {
   if (!GOOGLE_CLIENT_ID) {
     return res
       .status(500)
@@ -19,17 +18,17 @@ export function googleAuthRedirect(req: Request, res: Response) {
       .json({ error: "Missing BASE_URL or APP_SCHEME environment variable" });
   }
 
-  const internalClient = req.query.client_id as string | undefined;
-  const redirectUri = req.query.redirect_uri as string | undefined;
+  const internalClient = req.query.client_id;
+  const redirectUri = req.query.redirect_uri;
 
-  let platform: string;
+  let platform;
   if (redirectUri === APP_SCHEME) {
     platform = "mobile";
   } else {
     return res.status(400).json({ error: "Invalid redirect_uri" });
   }
 
-  const rawState = req.query.state as string | undefined;
+  const rawState = req.query.state;
   if (!rawState) {
     return res.status(400).json({ error: "Invalid state" });
   }
@@ -37,14 +36,14 @@ export function googleAuthRedirect(req: Request, res: Response) {
   // dùng state để biết đường redirect ngược lại platform
   const state = platform + "|" + rawState;
 
-  let idpClientId: string;
+  let idpClientId;
   if (internalClient === "google") {
     idpClientId = GOOGLE_CLIENT_ID;
   } else {
     return res.status(400).json({ error: "Invalid client" });
   }
 
-  const scope = (req.query.scope as string) || "identity";
+  const scope = req.query.scope || "identity";
 
   const params = new URLSearchParams({
     client_id: idpClientId,

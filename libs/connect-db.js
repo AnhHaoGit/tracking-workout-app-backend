@@ -1,7 +1,6 @@
 import { MONGODB_URI, MONGODB_DB_NAME } from "../config/constants.ts";
 import { MongoClient } from "mongodb";
 
-
 if (!MONGODB_URI) {
   throw new Error("Missing MONGODB_URI environment variable");
 }
@@ -13,9 +12,7 @@ if (!MONGODB_NAME) {
 
 const client = new MongoClient(MONGODB_URI);
 
-let connectionPromise: ReturnType<typeof client.db> extends never
-  ? never
-  : Promise<ReturnType<typeof client.db>> | null = null;
+let connectionPromise = null;
 
 export const connectToDatabase = async () => {
   if (!connectionPromise) {

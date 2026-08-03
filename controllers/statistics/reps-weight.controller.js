@@ -1,12 +1,11 @@
-import type { Request, Response } from "express";
 import { connectToDatabase } from "../../libs/connect-db.ts";
 import formatDate from "../../libs/format-date.ts";
 
-const estimateOneRepMax = (weight: number, reps: number) => {
+const estimateOneRepMax = (weight, reps) => {
   return Math.round(weight * (1 + reps / 30) * 100) / 100;
 };
 
-export async function getRepsWeightStatistics(req: Request, res: Response) {
+export async function getRepsWeightStatistics(req, res) {
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });

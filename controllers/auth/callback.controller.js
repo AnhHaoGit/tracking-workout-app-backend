@@ -1,8 +1,7 @@
-import type { Request, Response } from "express";
 import { APP_SCHEME } from "../../config/constants.ts";
 
-export function oauthRedirectCallback(req: Request, res: Response) {
-  const combinedPlatformAndState = req.query.state as string | undefined;
+export function oauthRedirectCallback(req, res) {
+  const combinedPlatformAndState = req.query.state;
   if (!combinedPlatformAndState) {
     return res.status(400).json({ error: "Invalid state" });
   }
@@ -12,7 +11,7 @@ export function oauthRedirectCallback(req: Request, res: Response) {
     return res.status(400).json({ error: "Invalid state format" });
   }
 
-  const code = req.query.code as string | undefined;
+  const code = req.query.code;
   if (!code) {
     return res.status(400).json({ error: "Missing authorization code" });
   }

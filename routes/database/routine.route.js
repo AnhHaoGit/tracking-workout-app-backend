@@ -9,8 +9,6 @@ router.use((req, res, next) => {
   next();
 });
 
-
-
 router.post("/", withAuth, updateRoutine);
 
 export default router;

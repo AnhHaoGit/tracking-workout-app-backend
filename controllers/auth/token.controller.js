@@ -1,4 +1,3 @@
-import type { Request, Response as ExpressResponse } from "express";
 import * as jose from "jose";
 import {
   GOOGLE_CLIENT_ID,
@@ -13,8 +12,8 @@ const GOOGLE_JWKS = jose.createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs"),
 );
 
-export async function exchangeGoogleToken(req: Request, res: ExpressResponse) {
-  const code = req.body?.code as string | undefined;
+export async function exchangeGoogleToken(req, res) {
+  const code = req.body?.code;
 
   if (!code) {
     return res.status(400).json({ error: "Missing authorization code" });
@@ -26,8 +25,8 @@ export async function exchangeGoogleToken(req: Request, res: ExpressResponse) {
       .json({ error: "OAuth server configuration is incomplete" });
   }
 
-  let fetchResponse: globalThis.Response;
-  let data: any;
+  let fetchResponse;
+  let data;
 
   try {
     fetchResponse = await fetch("https://oauth2.googleapis.com/token", {
@@ -63,21 +62,21 @@ export async function exchangeGoogleToken(req: Request, res: ExpressResponse) {
     return res.status(400).json({ error: "Missing required parameters" });
   }
 
-  let userInfo: Record<string, unknown>;
+  let userInfo;
   try {
     const verified = await jose.jwtVerify(data.id_token, GOOGLE_JWKS, {
       issuer: ["https://accounts.google.com", "accounts.google.com"],
       audience: GOOGLE_CLIENT_ID,
     });
-    userInfo = verified.payload as Record<string, unknown>;
+    userInfo = verified.payload;
   } catch (error) {
     return res.status(401).json({ error: "Invalid ID token" });
   }
 
   // Loại bỏ exp khỏi payload gốc trước khi ký token mới
-  const { exp, ...userInfoWithoutExp } = userInfo as any;
+  const { exp, ...userInfoWithoutExp } = userInfo;
 
-  const sub = (userInfo as { sub: string }).sub;
+  const sub = userInfo.sub;
   const issuedAt = Math.floor(Date.now() / 1000);
 
   if (!JWT_SECRET) {

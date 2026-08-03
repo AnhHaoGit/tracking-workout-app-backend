@@ -1,8 +1,7 @@
-import type { Request, Response } from "express";
 import { connectToDatabase } from "../../libs/connect-db.ts";
 import { ObjectId } from "mongodb";
 
-export async function updateWorkoutSessionStatus(req: Request, res: Response) {
+export async function updateWorkoutSessionStatus(req, res) {
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });
