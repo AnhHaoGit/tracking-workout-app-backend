@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { connectToDatabase } from "../../libs/connect-db.ts";
 
 export async function getUserData(req: Request, res: Response) {
+  console.log("getUserData called");
   const userId = req.user?.sub;
   if (!userId) {
     return res.status(401).json({ error: "Authentication required" });
