@@ -5,8 +5,8 @@ import {
   GOOGLE_REDIRECT_URI,
   JWT_EXPIRATION_TIME,
   JWT_SECRET,
-} from "../../config/constants.ts";
-import { connectToDatabase } from "../../libs/connect-db.ts";
+} from "../../config/constants.js";
+import { connectToDatabase } from "../../libs/connect-db.js";
 
 const GOOGLE_JWKS = jose.createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs"),

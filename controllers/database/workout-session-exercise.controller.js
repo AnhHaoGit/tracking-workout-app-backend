@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../../libs/connect-db.ts";
+import { connectToDatabase } from "../../libs/connect-db.js";
 import { ObjectId } from "mongodb";
 
 export async function deleteWorkoutSessionExercise(req, res) {

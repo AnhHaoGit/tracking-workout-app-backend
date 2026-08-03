@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { googleAuthRedirect } from "../../controllers/auth/authorize.controller.ts";
+import { googleAuthRedirect } from "../../controllers/auth/authorize.controller.js";
 
 const router = Router();
 

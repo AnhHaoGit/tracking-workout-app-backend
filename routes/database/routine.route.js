@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { withAuth } from "../../middlewares/auth.middleware.ts";
-import { updateRoutine } from "../../controllers/database/routine.controller.ts";
+import { withAuth } from "../../middlewares/auth.middleware.js";
+import { updateRoutine } from "../../controllers/database/routine.controller.js";
 
 const router = Router();
 

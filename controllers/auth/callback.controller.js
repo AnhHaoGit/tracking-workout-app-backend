@@ -1,4 +1,4 @@
-import { APP_SCHEME } from "../../config/constants.ts";
+import { APP_SCHEME } from "../../config/constants.js";
 
 export function oauthRedirectCallback(req, res) {
   const combinedPlatformAndState = req.query.state;

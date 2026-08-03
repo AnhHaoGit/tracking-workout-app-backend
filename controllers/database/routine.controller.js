@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../../libs/connect-db.ts";
+import { connectToDatabase } from "../../libs/connect-db.js";
 
 export async function updateRoutine(req, res) {
   const userId = req.user?.sub;

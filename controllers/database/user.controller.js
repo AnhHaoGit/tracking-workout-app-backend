@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../../libs/connect-db.ts";
+import { connectToDatabase } from "../../libs/connect-db.js";
 
 export async function getUserData(req, res) {
   console.log("getUserData called");

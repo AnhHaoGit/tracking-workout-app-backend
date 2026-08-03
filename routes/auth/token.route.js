@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { exchangeGoogleToken } from "../../controllers/auth/token.controller.ts";
+import { exchangeGoogleToken } from "../../controllers/auth/token.controller.js";
 import multer from "multer";
 const upload = multer();
 

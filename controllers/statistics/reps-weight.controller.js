@@ -1,5 +1,5 @@
-import { connectToDatabase } from "../../libs/connect-db.ts";
-import formatDate from "../../libs/format-date.ts";
+import { connectToDatabase } from "../../libs/connect-db.js";
+import formatDate from "../../libs/format-date.js";
 
 const estimateOneRepMax = (weight, reps) => {
   return Math.round(weight * (1 + reps / 30) * 100) / 100;

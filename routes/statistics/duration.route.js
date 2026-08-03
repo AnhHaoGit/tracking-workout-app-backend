@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { withAuth } from "../../middlewares/auth.middleware.ts";
-import { getDurationStatistics } from "../../controllers/statistics/duration.controller.ts";
+import { withAuth } from "../../middlewares/auth.middleware.js";
+import { getDurationStatistics } from "../../controllers/statistics/duration.controller.js";
 
 const router = Router();
 

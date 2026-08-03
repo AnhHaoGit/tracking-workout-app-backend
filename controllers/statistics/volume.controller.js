@@ -1,5 +1,5 @@
-import { connectToDatabase } from "../../libs/connect-db.ts";
-import formatDate from "../../libs/format-date.ts";
+import { connectToDatabase } from "../../libs/connect-db.js";
+import formatDate from "../../libs/format-date.js";
 
 export async function getVolumeStatistics(req, res) {
   const userId = req.user?.sub;

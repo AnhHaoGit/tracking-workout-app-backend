@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { withAuth } from "../../middlewares/auth.middleware.ts";
-import { getRepsStatistics } from "../../controllers/statistics/reps.controller.ts";
+import { withAuth } from "../../middlewares/auth.middleware.js";
+import { getRepsStatistics } from "../../controllers/statistics/reps.controller.js";
 
 const router = Router();
 

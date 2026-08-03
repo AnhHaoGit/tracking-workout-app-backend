@@ -1,5 +1,5 @@
 import * as jose from "jose";
-import { JWT_SECRET } from "../config/constants.ts";
+import { JWT_SECRET } from "../config/constants.js";
 
 export async function withAuth(req, res, next) {
   try {

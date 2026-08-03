@@ -3,7 +3,7 @@ import {
   BASE_URL,
   GOOGLE_AUTH_URL,
   GOOGLE_CLIENT_ID,
-} from "../../config/constants.ts";
+} from "../../config/constants.js";
 
 export function googleAuthRedirect(req, res) {
   if (!GOOGLE_CLIENT_ID) {

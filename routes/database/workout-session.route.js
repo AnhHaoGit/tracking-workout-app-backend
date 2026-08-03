@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { withAuth } from "../../middlewares/auth.middleware.ts";
+import { withAuth } from "../../middlewares/auth.middleware.js";
 import {
   getWorkoutSession,
   updateWorkoutSession,
-} from "../../controllers/database/workout-session.controller.ts";
+} from "../../controllers/database/workout-session.controller.js";
 
 const router = Router();
 

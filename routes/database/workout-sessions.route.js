@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { withAuth } from "../../middlewares/auth.middleware.ts";
+import { withAuth } from "../../middlewares/auth.middleware.js";
 import {
   createWorkoutSession,
   deleteWorkoutSession,
   getWorkoutSessions,
-} from "../../controllers/database/workout-sessions.controller.ts";
+} from "../../controllers/database/workout-sessions.controller.js";
 
 const router = Router();
 

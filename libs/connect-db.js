@@ -1,4 +1,4 @@
-import { MONGODB_URI, MONGODB_DB_NAME } from "../config/constants.ts";
+import { MONGODB_URI, MONGODB_DB_NAME } from "../config/constants.js";
 import { MongoClient } from "mongodb";
 
 if (!MONGODB_URI) {

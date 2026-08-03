@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { withAuth } from "../../middlewares/auth.middleware.ts";
-import { getVolumeStatistics } from "../../controllers/statistics/volume.controller.ts";
+import { withAuth } from "../../middlewares/auth.middleware.js";
+import { getVolumeStatistics } from "../../controllers/statistics/volume.controller.js";
 
 const router = Router();
 
