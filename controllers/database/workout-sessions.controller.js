@@ -40,7 +40,7 @@ export async function createWorkoutSession(req, res) {
     const session = {
       ...body,
       userId,
-      createdAt: body.createdAt ? new Date(body.createdAt) : new Date(),
+      createdAt: body.createdAt ,
     };
 
     const insertResult = await sessionsCollection.insertOne(session);

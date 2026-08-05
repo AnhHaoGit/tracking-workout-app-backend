@@ -27,8 +27,8 @@ export async function getDurationStatistics(req, res) {
             userId,
             status: "Completed",
             name,
-            startedAt: { $ne: null },
-            finishedAt: { $ne: null },
+            startedAt: { $exists: true, $ne: null },
+            finishedAt: { $exists: true, $ne: null },
           },
         },
         {
